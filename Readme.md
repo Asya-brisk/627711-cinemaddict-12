@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анастасия Григорьева](https://up.htmlacademy.ru/ecmascript/12/user/627711).
-* Наставник: `Неизвестно`.
+* Наставник: [Пётр Двухреченский](https://up.htmlacademy.ru/ecmascript/12/user/1223515).
 
 ---
 
