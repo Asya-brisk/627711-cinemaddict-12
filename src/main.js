@@ -305,18 +305,15 @@ const render = (container, template, place) => {
 };
 
 const siteHeaderElement = document.querySelector(`.header`);
-
-render(siteHeaderElement, createUserProfileTemplate(), `beforeend`);
-
 const siteMainElement = document.querySelector(`.main`);
+const filmsElement = siteMainElement.querySelector(`.films`);
+const filmsListElement = filmsElement.querySelector(`.films-list`);
+const filmsListContainers = filmsElement.querySelectorAll(`.films-list__container`);render(siteHeaderElement, createUserProfileTemplate(), `beforeend`);
+const footerElement = document.querySelector(`.footer`);
+
 
 render(siteMainElement, createSiteMenuTemplate(), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
-
-const filmsElement = siteMainElement.querySelector(`.films`);
-const filmsListElement = filmsElement.querySelector(`.films-list`);
-const filmsListContainers = filmsElement.querySelectorAll(`.films-list__container`);
-
 render(filmsListElement, createShowMoreButtonTemplate(), `beforeend`);
 
 for (let i = 0; i < CARD_COUNT; i++) {
@@ -331,5 +328,4 @@ for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(filmsListContainers[2], createMostCommentedFilmCardTemplate(), `beforeend`);
 }
 
-const footerElement = document.querySelector(`.footer`);
 render(footerElement, createFilmDetailsPopupTemplate(), `afterend`);
