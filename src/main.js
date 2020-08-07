@@ -321,13 +321,18 @@ render(filmsListElement, createShowMoreButtonTemplate(), `beforeend`);
 
 for (let i = 0; i < CARD_COUNT; i++) {
   render(filmsListContainers[0], createFilmCardTemplate(), `beforeend`);
-};
+}
 
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(filmsListContainers[1], createTopRatedFilmCardTemplate(), `beforeend`);
-};
+}
 
 for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
   render(filmsListContainers[2], createMostCommentedFilmCardTemplate(), `beforeend`);
-};
+}
+
+const footerElement = document.querySelector(`.footer`);
+render(footerElement, createFilmDetailsPopupTemplate(), `afterend`);
+
+
 
