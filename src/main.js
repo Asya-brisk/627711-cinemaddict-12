@@ -308,10 +308,10 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const filmsElement = siteMainElement.querySelector(`.films`);
 const filmsListElement = filmsElement.querySelector(`.films-list`);
-const filmsListContainers = filmsElement.querySelectorAll(`.films-list__container`);render(siteHeaderElement, createUserProfileTemplate(), `beforeend`);
+const filmsListContainers = filmsElement.querySelectorAll(`.films-list__container`);
 const footerElement = document.querySelector(`.footer`);
 
-
+render(siteHeaderElement, createUserProfileTemplate(), `beforeend`);
 render(siteMainElement, createSiteMenuTemplate(), `beforeend`);
 render(siteMainElement, createSortTemplate(), `beforeend`);
 render(filmsListElement, createShowMoreButtonTemplate(), `beforeend`);
