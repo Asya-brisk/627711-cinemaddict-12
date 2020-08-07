@@ -333,6 +333,3 @@ for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
 
 const footerElement = document.querySelector(`.footer`);
 render(footerElement, createFilmDetailsPopupTemplate(), `afterend`);
-
-
-
