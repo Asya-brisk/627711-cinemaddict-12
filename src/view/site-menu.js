@@ -1,9 +1,9 @@
-const createFilterItemTemplate = (filter, isActive) => {
+const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
 
   const nameInUpperCase = name[0].toUpperCase() + name.substring(1);
 
-   return (
+  return (
     `<a href="#${name}" class="main-navigation__item">
     ${nameInUpperCase} <span class="main-navigation__item-count ${count > 5 ? `visually-hidden` : ``}">${count}</span></a>`
   );

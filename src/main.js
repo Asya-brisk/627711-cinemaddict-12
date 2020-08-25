@@ -96,5 +96,4 @@ if (mostCommentedFilms.length > 0) {
 
 render(footerStatisticsElement, createFooterStatisticsTemplate(), `beforeend`);
 
-//render(siteBodyElement, createFilmDetailsPopupTemplate(films[0]), `beforeend`);
-
+render(siteBodyElement, createFilmDetailsPopupTemplate(films[0]), `beforeend`);
