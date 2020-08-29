@@ -1,4 +1,4 @@
-import {getPlurals} from "../utils.js";
+import {getPlurals, createElement} from "../utils.js";
 
 const trimDescription = (description) => {
   return description.length > 139 ? description.substr(0, 139) + `...` : description;
@@ -45,3 +45,27 @@ export const createFilmCardTemplate = (film) => {
     </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

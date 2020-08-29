@@ -1,5 +1,5 @@
 import {getPlurals} from "../utils.js";
-import {createCommentsTemplate} from "./comment.js";
+import {createElement} from "../utils.js";
 
 const generateGenreTemplate = (elem) => {
   return (
@@ -7,18 +7,17 @@ const generateGenreTemplate = (elem) => {
   );
 };
 
-export const createFilmDetailsPopupTemplate = (film) => {
+
+const createFilmDetailsPopupTemplate = (film) => {
   const {
     poster, ageRating, title, rating,
     director, writers, actors, releaseDate,
     duration, country, genres, description,
-    comments, isInWatchList, isWatched, isFavorite
+    isInWatchList, isWatched, isFavorite, commentsNum
   } = film;
 
   const genresText = getPlurals(genres.length, [`Genre`, `Genres`]);
   const genresTemp = genres.map((genre) => generateGenreTemplate(genre)).join(`\n `);
-
-  const commentsList = createCommentsTemplate(comments);
 
   return (
     `<section class="film-details">
@@ -99,10 +98,10 @@ export const createFilmDetailsPopupTemplate = (film) => {
 
         <div class="form-details__bottom-container">
           <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
+            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsNum}</span></h3>
 
             <ul class="film-details__comments-list">
-            ${commentsList}
+
             </ul>
 
             <div class="film-details__new-comment">
@@ -140,3 +139,27 @@ export const createFilmDetailsPopupTemplate = (film) => {
     </section>`
   );
 };
+
+export default class FilmDetailsPopup {
+  constructor(film) {
+    this._film = film;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsPopupTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
