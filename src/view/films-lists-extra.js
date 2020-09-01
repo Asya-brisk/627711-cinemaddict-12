@@ -1,4 +1,6 @@
-export const createFilmsListsExtraTemplate = (listName) => {
+import {createElement} from "../utils.js";
+
+const createFilmsListsExtraTemplate = (listName) => {
   const getFilmsClass = (name) => {
     switch (name) {
       case `Top rated`:
@@ -20,3 +22,27 @@ export const createFilmsListsExtraTemplate = (listName) => {
     </section>`
   );
 };
+
+export default class FilmsListsExtra {
+  constructor(name) {
+    this._name = name;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmsListsExtraTemplate(this._name);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
