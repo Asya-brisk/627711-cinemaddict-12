@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils.js";
+import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils/common.js";
 import {TEXT, POSTERS, FILM_NAMES, NAMES, COUNTRIES, GENRES, AGE_RATINGS} from "../const.js";
 import {generateComment} from "./comment.js";
 

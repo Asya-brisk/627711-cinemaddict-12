@@ -79,6 +79,12 @@ const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
 
 const PROFILE_RATINGS = [`Novice`, `Fan`, `Movie Buff`];
 
+const SortType = {
+  DEFAULT: `default`,
+  BY_DATE: `by-date`,
+  BY_RATING: `by-rating`
+};
+
 export {
   TEXT,
   POSTERS,
@@ -89,5 +95,6 @@ export {
   AGE_RATINGS,
   EMOJIS,
   PROFILE_RATINGS,
+  SortType,
 };
 

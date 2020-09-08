@@ -1,12 +1,11 @@
-import {getPlurals} from "../utils.js";
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
+import {getPlurals} from "../utils/common.js";
 
 const generateGenreTemplate = (elem) => {
   return (
     `<span class="film-details__genre">${elem}</span>`
   );
 };
-
 
 const createFilmDetailsPopupTemplate = (film) => {
   const {
@@ -140,26 +139,25 @@ const createFilmDetailsPopupTemplate = (film) => {
   );
 };
 
-export default class FilmDetailsPopup {
+export default class FilmDetailsPopup extends AbstractView {
   constructor(film) {
+    super();
     this._film = film;
-
-    this._element = null;
+    this._closeBtnClickHandler = this._closeBtnClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmDetailsPopupTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _closeBtnClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.closeBtnClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setCloseBtnClickHandler(callback) {
+    this._callback.closeBtnClick = callback;
+
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeBtnClickHandler);
   }
 }

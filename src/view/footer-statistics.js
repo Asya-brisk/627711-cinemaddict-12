@@ -1,29 +1,14 @@
-import {getRandomInteger, createElement} from "../utils";
+import AbstractView from "./abstract.js";
+import {getRandomInteger} from "../utils/common.js";
 
 const createFooterStatisticsTemplate = () => {
-  return (`
-    <p>${getRandomInteger(130291).toLocaleString()} movies inside</p>
-  `);
+  return (
+    `<p>${getRandomInteger(130291).toLocaleString()} movies inside</p>`
+  );
 };
 
-export default class FooterStatistics {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FooterStatistics extends AbstractView {
   getTemplate() {
     return createFooterStatisticsTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

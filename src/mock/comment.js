@@ -1,5 +1,5 @@
 import {EMOJIS} from "../const.js";
-import {getRandomArrayItem, getRandomDate} from "../utils.js";
+import {getRandomArrayItem, getRandomDate} from "../utils/common.js";
 
 const generateCommentDate = () => {
   const commentRandomDate = getRandomDate(new Date(2015, 0, 1), new Date());
