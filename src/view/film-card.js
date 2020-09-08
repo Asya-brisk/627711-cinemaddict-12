@@ -6,9 +6,7 @@ const trimDescription = (description) => {
 };
 
 export const createFilmCardTemplate = (film) => {
-  const {poster, title, rating, releaseDate, duration, genres, description, comments, isInWatchList, isWatched, isFavorite} = film;
-
-  const year = releaseDate.substr(-4);
+  const {poster, title, rating, releaseYear, duration, genres, description, comments, isInWatchList, isWatched, isFavorite} = film;
 
   const shortDescription = trimDescription(description);
 
@@ -31,7 +29,7 @@ export const createFilmCardTemplate = (film) => {
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${year}</span>
+        <span class="film-card__year">${releaseYear}</span>
         <span class="film-card__duration">${duration}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>

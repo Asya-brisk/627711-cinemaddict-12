@@ -17,6 +17,7 @@ const createFilmsListsExtraTemplate = (listName) => {
   return (
     `<section class="films-list--extra ${filmClass}">
       <h2 class="films-list__title">${listName}</h2>
+      <div class="films-list__container"></div>
     </section>`
   );
 };

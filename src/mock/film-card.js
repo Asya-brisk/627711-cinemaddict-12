@@ -40,12 +40,14 @@ const generateDescription = () => {
 
 export const generateFilmCard = () => {
   const commentsNum = getRandomInteger(0, 5);
+  const filmsReleaseDate = generateReleaseDate();
 
   return {
     poster: getRandomArrayItem(POSTERS),
     title: getRandomArrayItem(FILM_NAMES),
     rating: getRandomDecimalNumber(0, 10),
-    releaseDate: generateReleaseDate(),
+    releaseDate: filmsReleaseDate,
+    releaseYear: filmsReleaseDate.substr(-4),
     duration: generateFilmDuration(),
     genres: shuffleArray(GENRES).slice(0, getRandomInteger(1, 4)),
     description: generateDescription(),

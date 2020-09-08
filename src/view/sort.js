@@ -29,10 +29,18 @@ export default class Sort extends AbstractView {
 
     evt.preventDefault();
     this._callback.sortTypeChange(evt.target.dataset.sortType);
+
+    this._removeActiveClass();
+    evt.target.classList.add(`sort__button--active`);
   }
 
   setSortTypeChangeHandler(callback) {
     this._callback.sortTypeChange = callback;
     this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
+  }
+
+  _removeActiveClass() {
+    this.getElement().querySelectorAll(`a`)
+      .forEach((link) => link.classList.remove(`sort__button--active`));
   }
 }
