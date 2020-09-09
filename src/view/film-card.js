@@ -1,13 +1,12 @@
-import {getPlurals, createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
+import {getPlurals} from "../utils/common.js";
 
 const trimDescription = (description) => {
   return description.length > 139 ? description.substr(0, 139) + `...` : description;
 };
 
 export const createFilmCardTemplate = (film) => {
-  const {poster, title, rating, releaseDate, duration, genres, description, comments, isInWatchList, isWatched, isFavorite} = film;
-
-  const year = releaseDate.substr(-4);
+  const {poster, title, rating, releaseYear, duration, genres, description, comments, isInWatchList, isWatched, isFavorite} = film;
 
   const shortDescription = trimDescription(description);
 
@@ -30,7 +29,7 @@ export const createFilmCardTemplate = (film) => {
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${year}</span>
+        <span class="film-card__year">${releaseYear}</span>
         <span class="film-card__duration">${duration}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
@@ -46,26 +45,28 @@ export const createFilmCardTemplate = (film) => {
   );
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractView {
   constructor(film) {
+    super();
     this._film = film;
 
-    this._element = null;
+    this._cardElementsClickHandler = this._cardElementsClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _cardElementsClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.cardElementsClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setCardElementsClickHandler(callback) {
+    this._callback.cardElementsClick = callback;
+
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._cardElementsClickHandler);
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._cardElementsClickHandler);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._cardElementsClickHandler);
   }
 }

@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils.js";
+import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils/common.js";
 import {TEXT, POSTERS, FILM_NAMES, NAMES, COUNTRIES, GENRES, AGE_RATINGS} from "../const.js";
 import {generateComment} from "./comment.js";
 
@@ -40,12 +40,14 @@ const generateDescription = () => {
 
 export const generateFilmCard = () => {
   const commentsNum = getRandomInteger(0, 5);
+  const filmsReleaseDate = generateReleaseDate();
 
   return {
     poster: getRandomArrayItem(POSTERS),
     title: getRandomArrayItem(FILM_NAMES),
     rating: getRandomDecimalNumber(0, 10),
-    releaseDate: generateReleaseDate(),
+    releaseDate: filmsReleaseDate,
+    releaseYear: filmsReleaseDate.substr(-4),
     duration: generateFilmDuration(),
     genres: shuffleArray(GENRES).slice(0, getRandomInteger(1, 4)),
     description: generateDescription(),

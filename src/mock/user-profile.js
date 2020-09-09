@@ -1,4 +1,4 @@
-import {getRandomInteger} from "../utils";
+import {getRandomInteger} from "../utils/common.js";
 import {PROFILE_RATINGS} from "../const.js";
 
 export const generateRating = () => {
