@@ -6,6 +6,7 @@ import FilmsListContainerView from "../view/films-list-container.js";
 import ShowMoreButtonView from "../view/show-more-button.js";
 import NoFilmsView from "../view/no-films.js";
 import {getTopRatedFilms, getMostCommentedFilms} from "../utils/films.js";
+import {updateItem} from "../utils/common.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {SortType} from "../const.js";
 import FilmPresenter from "./film.js";
@@ -15,6 +16,7 @@ export default class FilmsLists {
   constructor(filmsListsContainer) {
     this._filmsListsContainer = filmsListsContainer;
     this._renderedFilmCount = CARDS_COUNT_PER_STEP;
+    this._filmPresenter = {};
     this._currentSortType = SortType.DEFAULT;
 
     this._filmsComponent = new FilmsContainerView();
@@ -26,6 +28,7 @@ export default class FilmsLists {
     this._topRatedFilmsListComponent = new FilmsListsExtraView(`Top rated`);
     this._mostCommentedFilmsListComponent = new FilmsListsExtraView(`Most commented`);
 
+    this._handleFilmChange = this._handleFilmChange.bind(this);
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
@@ -63,6 +66,11 @@ export default class FilmsLists {
     this._renderFilmsList();
   }
 
+  _handleFilmChange(updatedFilm) {
+    this._films = updateItem(this._films, updatedFilm);
+    this._filmPresenter[updatedFilm.id].init(updatedFilm);
+  }
+
   _renderSort() {
     render(this._filmsListsContainer, this._sortComponent, RenderPosition.BEFOREEND);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
@@ -71,6 +79,7 @@ export default class FilmsLists {
   _renderFilm(filmsListContainer, film) {
     const filmPresenter = new FilmPresenter(filmsListContainer);
     filmPresenter.init(film, this._userComments);
+    this._filmPresenter[film.id] = filmPresenter;
   }
 
   _renderFilms(from, to) {
@@ -98,8 +107,12 @@ export default class FilmsLists {
   }
 
   _clearFilmsList() {
-    this._filmsListContainerComponent.getElement().innerHTML = ``;
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this._filmPresenter = {};
     this._renderedFilmCount = CARDS_COUNT_PER_STEP;
+    remove(this._showMoreButtonComponent);
   }
 
   _renderFilmsList() {

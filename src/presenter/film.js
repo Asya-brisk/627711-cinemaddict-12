@@ -1,6 +1,6 @@
 import FilmCardView from "../view/film-card.js";
 import FilmDetailsPopupView from "../view/film-details-popup.js";
-import {render, RenderPosition, remove} from "../utils/render.js";
+import {render, RenderPosition, remove, replace} from "../utils/render.js";
 
 const siteBodyElement = document.querySelector(`body`);
 
@@ -17,12 +17,35 @@ export default class Film {
   }
 
   init(film) {
+    this._film = film;
+
+    const prevFilmCardComponent = this._filmCardComponent;
+    const prevFilmDetailsPopupComponent = this._filmDetailsPopupComponent;
     this._filmCardComponent = new FilmCardView(film);
     this._filmDetailsPopupComponent = new FilmDetailsPopupView(film);
 
     this._filmCardComponent.setCardElementsClickHandler(this._handleFilmCardClick);
 
-    render(this._filmsListContainer, this._filmCardComponent, RenderPosition.BEFOREEND);
+    if (prevFilmCardComponent === null || prevFilmDetailsPopupComponent === null) {
+      render(this._filmsListContainer, this._filmCardComponent, RenderPosition.BEFOREEND);
+      return;
+    }
+
+    if (this._filmsListContainer.getElement().contains(prevFilmCardComponent.getElement())) {
+      replace(this._filmCardComponent, prevFilmCardComponent);
+    }
+
+    if (siteBodyElement.contains(prevFilmDetailsPopupComponent.getElement())) {
+      replace(this._filmDetailsPopupComponent, prevFilmDetailsPopupComponent);
+    }
+
+    remove(prevFilmCardComponent);
+    remove(prevFilmDetailsPopupComponent);
+  }
+
+  destroy() {
+    remove(this._filmCardComponent);
+    remove(this._filmDetailsPopupComponent);
   }
 
   _escKeyDownHandler(evt) {

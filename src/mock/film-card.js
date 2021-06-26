@@ -1,7 +1,8 @@
 import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils/common.js";
 import {TEXT, POSTERS, FILM_NAMES, NAMES, COUNTRIES, GENRES, AGE_RATINGS} from "../const.js";
 import {generateComment} from "./comment.js";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import nanoid from "nanoid";
 
 const generateReleaseDate = () => {
   const releaseRandomDate = getRandomDate(new Date(1940, 1, 1), new Date(1999, 1, 1));
@@ -37,6 +38,7 @@ export const generateFilmCard = () => {
   const filmsReleaseDate = generateReleaseDate();
 
   return {
+    id: nanoid(),
     poster: getRandomArrayItem(POSTERS),
     title: getRandomArrayItem(FILM_NAMES),
     rating: getRandomDecimalNumber(0, 10),
