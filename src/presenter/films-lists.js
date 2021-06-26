@@ -3,19 +3,14 @@ import FilmsContainerView from "../view/films-container.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsListsExtraView from "../view/films-lists-extra.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-import FilmCardView from "../view/film-card.js";
 import ShowMoreButtonView from "../view/show-more-button.js";
-import FilmDetailsPopupView from "../view/film-details-popup.js";
-import CommentsView from "../view/comments.js";
 import NoFilmsView from "../view/no-films.js";
 import {getTopRatedFilms, getMostCommentedFilms} from "../utils/films.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {SortType} from "../const.js";
+import FilmPresenter from "./film.js";
 
 const CARDS_COUNT_PER_STEP = 5;
-
-const siteBodyElement = document.querySelector(`body`);
-
 export default class FilmsLists {
   constructor(filmsListsContainer) {
     this._filmsListsContainer = filmsListsContainer;
@@ -74,36 +69,8 @@ export default class FilmsLists {
   }
 
   _renderFilm(filmsListContainer, film) {
-    const filmCardComponent = new FilmCardView(film);
-    const filmDetailsPopupComponent = new FilmDetailsPopupView(film);
-    const commentsComponent = new CommentsView(this._userComments);
-
-    const commentsListElement = filmDetailsPopupComponent.getElement().querySelector(`.film-details__comments-list`);
-    render(commentsListElement, commentsComponent, RenderPosition.BEFOREEND);
-
-    const onEscKeyDown = (evt) => {
-      if (evt.key === `Escape` || evt.key === `Esc`) {
-        evt.preventDefault();
-        closePopup();
-      }
-    };
-
-    const closePopup = () => {
-      remove(filmDetailsPopupComponent);
-      remove(commentsComponent);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const onFilmCardClick = () => {
-      render(siteBodyElement, filmDetailsPopupComponent, RenderPosition.BEFOREEND);
-
-      filmDetailsPopupComponent.setCloseBtnClickHandler(closePopup);
-      document.addEventListener(`keydown`, onEscKeyDown);
-    };
-
-    render(filmsListContainer, filmCardComponent, RenderPosition.BEFOREEND);
-
-    filmCardComponent.setCardElementsClickHandler(onFilmCardClick);
+    const filmPresenter = new FilmPresenter(filmsListContainer);
+    filmPresenter.init(film, this._userComments);
   }
 
   _renderFilms(from, to) {

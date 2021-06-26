@@ -1,18 +1,11 @@
 import {EMOJIS} from "../const.js";
 import {getRandomArrayItem, getRandomDate} from "../utils/common.js";
+import dayjs from "dayjs";
 
 const generateCommentDate = () => {
-  const commentRandomDate = getRandomDate(new Date(2015, 0, 1), new Date());
+  const commentRandomDate = getRandomDate(new Date(2017, 0, 1), new Date());
 
-  const options = {
-    year: `numeric`,
-    month: `2-digit`,
-    day: `2-digit`,
-    hour: `numeric`,
-    minute: `numeric`,
-  };
-
-  const commentDate = commentRandomDate.toLocaleString(`en-ZA`, options);
+  const commentDate = dayjs(commentRandomDate).format(`YYYY/MM/DD HH:mm`);
 
   return commentDate;
 };
