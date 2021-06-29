@@ -2,7 +2,7 @@ import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArr
 import {TEXT, POSTERS, FILM_NAMES, NAMES, COUNTRIES, GENRES, AGE_RATINGS} from "../const.js";
 import {generateComment} from "./comment.js";
 import dayjs from "dayjs";
-import nanoid from "nanoid";
+import {nanoid} from "nanoid";
 
 const generateReleaseDate = () => {
   const releaseRandomDate = getRandomDate(new Date(1940, 1, 1), new Date(1999, 1, 1));

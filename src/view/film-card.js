@@ -51,6 +51,9 @@ export default class FilmCard extends AbstractView {
     this._film = film;
 
     this._cardElementsClickHandler = this._cardElementsClickHandler.bind(this);
+    this._addToWatchlistClickHandler = this._addToWatchlistClickHandler.bind(this);
+    this._addTowatchedClickHandler = this._addTowatchedClickHandler.bind(this);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
 
   getTemplate() {
@@ -62,11 +65,41 @@ export default class FilmCard extends AbstractView {
     this._callback.cardElementsClick();
   }
 
+  _addToWatchlistClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.addToWatchlistClick();
+  }
+
+  _addTowatchedClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.addToWatchedClick();
+  }
+
+  _favoriteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.favoriteClick();
+  }
+
   setCardElementsClickHandler(callback) {
     this._callback.cardElementsClick = callback;
 
     this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._cardElementsClickHandler);
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._cardElementsClickHandler);
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._cardElementsClickHandler);
+  }
+
+  setAddToWatchlistClickHandler(callback) {
+    this._callback.addToWatchlistClick = callback;
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._addToWatchlistClickHandler);
+  }
+
+  setAddToWatchedClickHandler(callback) {
+    this._callback.addToWatchedClick = callback;
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._addTowatchedClickHandler);
+  }
+
+  setFavoriteClickHandler(callback) {
+    this._callback.favoriteClick = callback;
+    this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, this._favoriteClickHandler);
   }
 }

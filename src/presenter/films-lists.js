@@ -29,6 +29,7 @@ export default class FilmsLists {
     this._mostCommentedFilmsListComponent = new FilmsListsExtraView(`Most commented`);
 
     this._handleFilmChange = this._handleFilmChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
@@ -66,6 +67,13 @@ export default class FilmsLists {
     this._renderFilmsList();
   }
 
+  _handleModeChange() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.resetFilmView());
+  }
+
+
   _handleFilmChange(updatedFilm) {
     this._films = updateItem(this._films, updatedFilm);
     this._filmPresenter[updatedFilm.id].init(updatedFilm);
@@ -77,7 +85,7 @@ export default class FilmsLists {
   }
 
   _renderFilm(filmsListContainer, film) {
-    const filmPresenter = new FilmPresenter(filmsListContainer);
+    const filmPresenter = new FilmPresenter(filmsListContainer, this._handleFilmChange, this._handleModeChange);
     filmPresenter.init(film, this._userComments);
     this._filmPresenter[film.id] = filmPresenter;
   }

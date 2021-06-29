@@ -170,6 +170,7 @@ export default class FilmDetailsPopup extends AbstractView {
     this._film = film;
     this._comments = comments;
     this._closeBtnClickHandler = this._closeBtnClickHandler.bind(this);
+    this._controlBtnClickHandler = this._controlBtnClickHandler.bind(this);
   }
 
   getTemplate() {
@@ -181,9 +182,20 @@ export default class FilmDetailsPopup extends AbstractView {
     this._callback.closeBtnClick();
   }
 
+  _controlBtnClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.controlBtnClick(evt.target.id);
+  }
+
   setCloseBtnClickHandler(callback) {
     this._callback.closeBtnClick = callback;
 
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeBtnClickHandler);
+  }
+
+  setControlBtnClickHandler(callback) {
+    this._callback.controlBtnClick = callback;
+
+    this.getElement().querySelector(`.film-details__controls`).addEventListener(`change`, this._controlBtnClickHandler);
   }
 }
