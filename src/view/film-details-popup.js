@@ -1,8 +1,10 @@
 import AbstractView from "./abstract.js";
 import {getPlurals, getCommentDate} from "../utils/common.js";
+import dayjs from "dayjs";
 
 const createCommentsTemp = (comments) => {
-  const commentTemps = comments.map((comment) => {
+  const userComments = comments.sort((a, b) => dayjs(b.date).diff() - dayjs(a.date).diff());
+  const commentTemps = userComments.map((comment) => {
     const {emoji, message, name, date} = comment;
     const formatedDate = getCommentDate(date);
 

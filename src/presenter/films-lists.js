@@ -16,7 +16,11 @@ export default class FilmsLists {
   constructor(filmsListsContainer) {
     this._filmsListsContainer = filmsListsContainer;
     this._renderedFilmCount = CARDS_COUNT_PER_STEP;
-    this._filmPresenter = {};
+    this._filmPresenters = {
+      allFilmsList: {},
+      topRatingList: {},
+      mostCommentedList: {},
+    };
     this._currentSortType = SortType.DEFAULT;
 
     this._filmsComponent = new FilmsContainerView();
@@ -68,15 +72,23 @@ export default class FilmsLists {
   }
 
   _handleModeChange() {
-    Object
-      .values(this._filmPresenter)
-      .forEach((presenter) => presenter.resetFilmView());
+    Object.values(this._filmPresenters).forEach((list) => {
+      Object.values(list).forEach((presenter) => {
+        presenter.resetFilmView();
+      });
+    });
   }
-
 
   _handleFilmChange(updatedFilm) {
     this._films = updateItem(this._films, updatedFilm);
-    this._filmPresenter[updatedFilm.id].init(updatedFilm);
+    this._sourcedFilms = updateItem(this._sourcedFilms, updatedFilm);
+    Object
+      .values(this._filmPresenters)
+      .forEach((list) => {
+        if (updatedFilm.id in list) {
+          list[updatedFilm.id].init(updatedFilm);
+        }
+      });
   }
 
   _renderSort() {
@@ -84,10 +96,21 @@ export default class FilmsLists {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
-  _renderFilm(filmsListContainer, film) {
-    const filmPresenter = new FilmPresenter(filmsListContainer, this._handleFilmChange, this._handleModeChange);
+  _renderFilm(container, film) {
+    const filmPresenter = new FilmPresenter(container, this._handleFilmChange, this._handleModeChange);
     filmPresenter.init(film, this._userComments);
-    this._filmPresenter[film.id] = filmPresenter;
+
+    switch (container) {
+      case this._filmsListContainerComponent:
+        this._filmPresenters.allFilmsList[film.id] = filmPresenter;
+        break;
+      case this._topRatedFilmsContainer:
+        this._filmPresenters.topRatingList[film.id] = filmPresenter;
+        break;
+      case this._mostCommentedFilmsContainer:
+        this._filmPresenters.mostCommentedList[film.id] = filmPresenter;
+        break;
+    }
   }
 
   _renderFilms(from, to) {
@@ -116,9 +139,9 @@ export default class FilmsLists {
 
   _clearFilmsList() {
     Object
-      .values(this._filmPresenter)
+      .values(this._filmPresenters.allFilmsList)
       .forEach((presenter) => presenter.destroy());
-    this._filmPresenter = {};
+    this._filmPresenters.allFilmsList = {};
     this._renderedFilmCount = CARDS_COUNT_PER_STEP;
     remove(this._showMoreButtonComponent);
   }
@@ -135,24 +158,24 @@ export default class FilmsLists {
   }
 
   _renderTopRatedFilms() {
-    const topRatedFilms = getTopRatedFilms(this._films);
+    const topRatedFilms = getTopRatedFilms(this._films.slice());
 
     if (topRatedFilms.length > 0) {
       render(this._filmsComponent, this._topRatedFilmsListComponent, RenderPosition.BEFOREEND);
-      const topRatedFilmsElement = this._filmsComponent.getElement().querySelector(`.films-list--top_rated`).querySelector(`.films-list__container`);
+      this._topRatedFilmsContainer = this._filmsComponent.getElement().querySelector(`.films-list--top_rated`).querySelector(`.films-list__container`);
 
-      topRatedFilms.forEach((film) => this._renderFilm(topRatedFilmsElement, film));
+      topRatedFilms.forEach((film) => this._renderFilm(this._topRatedFilmsContainer, film));
     }
   }
 
   _renderMostCommentedFilms() {
-    const mostCommentedFilms = getMostCommentedFilms(this._films);
+    const mostCommentedFilms = getMostCommentedFilms(this._films.slice());
 
     if (mostCommentedFilms.length > 0) {
       render(this._filmsComponent, this._mostCommentedFilmsListComponent, RenderPosition.BEFOREEND);
-      const mostCommentedFilmsElement = this._filmsComponent.getElement().querySelector(`.films-list--most_commented`).querySelector(`.films-list__container`);
+      this._mostCommentedFilmsContainer = this._filmsComponent.getElement().querySelector(`.films-list--most_commented`).querySelector(`.films-list__container`);
 
-      mostCommentedFilms.forEach((film) => this._renderFilm(mostCommentedFilmsElement, film));
+      mostCommentedFilms.forEach((film) => this._renderFilm(this._mostCommentedFilmsContainer, film));
     }
   }
 
