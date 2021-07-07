@@ -53,6 +53,7 @@ export default class Film {
     this._filmCardComponent.setAddToWatchedClickHandler(this._handleMarkAsWathchedClick);
     this._filmCardComponent.setFavoriteClickHandler(this._handleFavoriteClick);
 
+
     if (prevFilmCardComponent === null || prevFilmDetailsPopupComponent === null) {
       render(this._filmsListContainer, this._filmCardComponent, RenderPosition.BEFOREEND);
       return;
@@ -71,13 +72,23 @@ export default class Film {
       replace(this._filmDetailsPopupComponent, prevFilmDetailsPopupComponent);
     }
 
+    if (this._filmDetailsMode === FilmDetailsMode.CLOSE) {
+      replace(this._filmCardComponent, prevFilmCardComponent);
+    }
+
+    if (this._filmDetailsMode === FilmDetailsMode.OPEN) {
+      replace(this._filmCardComponent, prevFilmCardComponent);
+      this._filmDetailsPopupComponent.updateData(this._film);
+
+    }
+
     remove(prevFilmCardComponent);
-    remove(prevFilmDetailsPopupComponent);
   }
 
   destroy() {
     remove(this._filmCardComponent);
     remove(this._filmDetailsPopupComponent);
+    document.removeEventListener(`keydown`, this._onEscKeyDownHandler);
   }
 
   resetFilmView() {
@@ -96,11 +107,14 @@ export default class Film {
   _closePopup() {
     remove(this._filmDetailsPopupComponent);
     this._filmDetailsMode = FilmDetailsMode.CLOSE;
+    this._filmDetailsPopupComponent.reset(this._film);
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
+    document.body.style.overflow = ``;
   }
 
   _openPopup() {
     render(siteBodyElement, this._filmDetailsPopupComponent, RenderPosition.BEFOREEND);
+    document.body.style.overflow = `hidden`;
     this._filmDetailsPopupComponent.setCloseBtnClickHandler(this._handlePopupButtonClose);
     this._filmDetailsPopupComponent.setControlBtnClickHandler(this._handlePopupControlBtnChange);
     document.addEventListener(`keydown`, this._escKeyDownHandler);
@@ -108,7 +122,8 @@ export default class Film {
     this._filmDetailsMode = FilmDetailsMode.OPEN;
   }
 
-  _handlePopupButtonClose() {
+  _handlePopupButtonClose(film) {
+    this._changeData(film);
     this._closePopup();
   }
 
