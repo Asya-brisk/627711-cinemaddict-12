@@ -1,26 +1,21 @@
 import {getRandomInteger, getRandomDecimalNumber, getRandomArrayItem, shuffleArray, getRandomBoolean, getRandomDate, generateElements} from "../utils/common.js";
 import {TEXT, POSTERS, FILM_NAMES, NAMES, COUNTRIES, GENRES, AGE_RATINGS} from "../const.js";
 import {generateComment} from "./comment.js";
+import dayjs from "dayjs";
+import {nanoid} from "nanoid";
 
 const generateReleaseDate = () => {
   const releaseRandomDate = getRandomDate(new Date(1940, 1, 1), new Date(1999, 1, 1));
 
-  const options = {
-    year: `numeric`,
-    month: `long`,
-    day: `2-digit`,
-  };
-
-  const releaseDate = releaseRandomDate.toLocaleString(`en-GB`, options);
-
-  return releaseDate;
+  return dayjs(releaseRandomDate).format(`DD MMMM YYYY`);
 };
 
 const generateFilmDuration = () => {
-  const hours = getRandomInteger(0, 2);
-  const minutes = getRandomInteger(0, 59);
+  const duration = getRandomInteger(60, 250);
+  const hours = Math.trunc(duration / 60);
+  const minutes = duration % 60;
 
-  return hours === 0 ? `${minutes}m` : `${hours}h ${minutes}m`;
+  return `${hours > 0 ? `${hours}h` : ``} ${minutes > 0 ? `${minutes}m` : ``}`;
 };
 
 const generateDescription = () => {
@@ -39,10 +34,11 @@ const generateDescription = () => {
 };
 
 export const generateFilmCard = () => {
-  const commentsNum = getRandomInteger(0, 5);
+  const commentsNum = getRandomInteger(0, 10);
   const filmsReleaseDate = generateReleaseDate();
 
   return {
+    id: nanoid(),
     poster: getRandomArrayItem(POSTERS),
     title: getRandomArrayItem(FILM_NAMES),
     rating: getRandomDecimalNumber(0, 10),

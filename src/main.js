@@ -14,9 +14,7 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 
-const filmCard = generateFilmCard();
 const filmCards = generateElements(CARD_COUNT, generateFilmCard);
-const comments = filmCard.comments;
 const filter = generateFilter(filmCards);
 const rating = generateRating();
 
@@ -24,6 +22,6 @@ const filmsListsPresenter = new FilmsListsPresenter(siteMainElement);
 
 render(siteHeaderElement, new UserProfileView(rating), RenderPosition.BEFOREEND);
 render(siteMainElement, new SiteMenuView(filter), RenderPosition.BEFOREEND);
-filmsListsPresenter.init(filmCards, comments);
+filmsListsPresenter.init(filmCards);
 
 render(footerStatisticsElement, new FooterStatisticsView(), RenderPosition.BEFOREEND);
