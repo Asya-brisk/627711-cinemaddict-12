@@ -1,5 +1,6 @@
 import {EMOJIS} from "../const.js";
 import {getRandomArrayItem, getRandomDate} from "../utils/common.js";
+import {nanoid} from 'nanoid';
 import dayjs from "dayjs";
 
 const generateCommentDate = () => {
@@ -28,6 +29,7 @@ export const generateComment = () => {
   ];
 
   return {
+    id: nanoid(),
     emoji: getRandomArrayItem(EMOJIS),
     message: getRandomArrayItem(userMessages),
     name: getRandomArrayItem(userNames),

@@ -53,9 +53,8 @@ export const generateFilmCard = () => {
     writers: shuffleArray(NAMES).slice(0, getRandomInteger(2, 4)).join(`, `),
     actors: shuffleArray(NAMES).slice(0, getRandomInteger(2, 4)).join(`, `),
     country: getRandomArrayItem(COUNTRIES),
-    isInWatchlist: getRandomBoolean(),
+    isInWatchList: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isFavorite: getRandomBoolean(),
-    commentsNum,
   };
 };

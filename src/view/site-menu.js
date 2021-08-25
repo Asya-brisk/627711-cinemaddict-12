@@ -1,25 +1,22 @@
 import AbstractView from "./abstract.js";
 
-const createFilterItemTemplate = (filter) => {
-  const {name, count} = filter;
-
-  const nameInUpperCase = name[0].toUpperCase() + name.substring(1);
+const createFilterItemTemplate = (filter, currentType) => {
+  const {type, name, count} = filter;
 
   return (
-    `<a href="#${name}" class="main-navigation__item">
-    ${nameInUpperCase} <span class="main-navigation__item-count ${count > 5 ? `visually-hidden` : ``}">${count}</span></a>`
+    `<a href="#${type}" data-filter="${type}" class="main-navigation__item ${type === currentType ? `main-navigation__item--active` : ``}">
+    ${name === `All` ? `All movies` : `${name} <span class="main-navigation__item-count ${count > 25 ? `visually-hidden` : ``}">${count}</span>`}</a>`
   );
 };
 
-const createSiteMenuTemplate = (filterItems) => {
+const createSiteMenuTemplate = (filterItems, currentFilterType) => {
   const filterItemsTemplate = filterItems
-    .map((filter, index) => createFilterItemTemplate(filter, index === 0))
+    .map((filter) => createFilterItemTemplate(filter, currentFilterType))
     .join(``);
 
   return (
     `<nav class="main-navigation">
       <div class="main-navigation__items">
-        <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
         ${filterItemsTemplate}
       </div>
       <a href="#stats" class="main-navigation__additional">Stats</a>
@@ -28,12 +25,26 @@ const createSiteMenuTemplate = (filterItems) => {
 };
 
 export default class SiteMenu extends AbstractView {
-  constructor(filters) {
+  constructor(filters, currentFilterType) {
     super();
     this._filters = filters;
+
+    this._currentFilter = currentFilterType;
+
+    this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
   }
 
   getTemplate() {
-    return createSiteMenuTemplate(this._filters);
+    return createSiteMenuTemplate(this._filters, this._currentFilter);
+  }
+
+  _filterTypeChangeHandler(evt) {
+    evt.preventDefault();
+    this._callback.filterTypeClick(evt.target.dataset.filter);
+  }
+
+  setFilterTypeChangeHandler(callback) {
+    this._callback.filterTypeClick = callback;
+    this.getElement().addEventListener(`click`, this._filterTypeChangeHandler);
   }
 }
