@@ -116,7 +116,7 @@ export default class Film {
   _handlePopupButtonClose(update) {
     this._changeData(
         UserAction.UPDATE_FILM,
-        this._film !== update || this._isChangeComment === true ? UpdateType.MINOR : UpdateType.NONUPDATE,
+        this._film !== update || this._isChangeComment === true ? UpdateType.MINOR : UpdateType.PATCH,
         update
     );
 

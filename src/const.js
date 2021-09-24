@@ -77,7 +77,12 @@ export const AGE_RATINGS = [
 
 export const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
 
-export const PROFILE_RATINGS = [`Novice`, `Fan`, `Movie Buff`];
+export const ProfileRank = {
+  NOVICE: `Novice`,
+  FAN: `Fan`,
+  MOVIE_BUFF: `Movie Buff`,
+  UNRANKED: ``,
+};
 
 export const FilmDetailsMode = {
   OPEN: `open`,
@@ -104,11 +109,14 @@ export const SortType = {
 
 export const UserAction = {
   UPDATE_FILM: `UPDATE_FILM`,
+  DELETE_COMMENT: `DELETE_COMMENT`,
 };
 
 export const UpdateType = {
+  PATCH: `PATCH`,
   MINOR: `MINOR`,
   MAJOR: `MAJOR`,
+  STATS: `STATS`,
 };
 
 export const FilterType = {
@@ -116,4 +124,13 @@ export const FilterType = {
   WATCHLIST: `watchlist`,
   HISTORY: `history`,
   FAVORITE: `favorite`,
+  STATS: `stats`,
+};
+
+export const StatisticPeriod = {
+  ALL_TIME: `all-time`,
+  TODAY: `day`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`,
 };

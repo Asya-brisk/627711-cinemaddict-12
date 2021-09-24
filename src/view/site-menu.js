@@ -1,4 +1,6 @@
 import AbstractView from "./abstract.js";
+import {FilterType} from "../const.js";
+
 
 const createFilterItemTemplate = (filter, currentType) => {
   const {type, name, count} = filter;
@@ -19,7 +21,8 @@ const createSiteMenuTemplate = (filterItems, currentFilterType) => {
       <div class="main-navigation__items">
         ${filterItemsTemplate}
       </div>
-      <a href="#stats" class="main-navigation__additional">Stats</a>
+      <a href="#stats" data-filter="${FilterType.STATS}" class="main-navigation__additional ${currentFilterType === FilterType.STATS ?
+      `main-navigation__additional--active` : ``}">Stats</a>
     </nav>`
   );
 };
@@ -39,7 +42,13 @@ export default class SiteMenu extends AbstractView {
   }
 
   _filterTypeChangeHandler(evt) {
-    evt.preventDefault();
+    const isNavigation = evt.target.classList.contains(`main-navigation__item`) ||
+    evt.target.classList.contains(`main-navigation__additional`);
+
+    if (!isNavigation) {
+      return;
+    }
+
     this._callback.filterTypeClick(evt.target.dataset.filter);
   }
 

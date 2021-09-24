@@ -1,6 +1,11 @@
-import AbstractView from "./abstract.js";
+import SmartView from "./smart.js";
+import {generateProfileRank, generateWatchedFilms} from "../utils/statistics.js";
 
-const createUserProfileTemplate = (profileRating) => {
+
+const createUserProfileTemplate = (films) => {
+  const watchedFilms = generateWatchedFilms(films);
+  const profileRating = generateProfileRank(watchedFilms.length);
+
   return (
     `<section class="header__profile profile">
       <p class="profile__rating">${profileRating}</p>
@@ -9,13 +14,22 @@ const createUserProfileTemplate = (profileRating) => {
   );
 };
 
-export default class UserProfile extends AbstractView {
-  constructor(rating) {
+export default class UserProfile extends SmartView {
+  constructor() {
     super();
-    this._rating = rating;
+    this._data = null;
+  }
+
+  setData(data) {
+    this._data = data.slice();
   }
 
   getTemplate() {
-    return createUserProfileTemplate(this._rating);
+    return createUserProfileTemplate(this._data);
+  }
+
+  updateData(data) {
+    this._data = data.slice();
+    this.updateElement();
   }
 }

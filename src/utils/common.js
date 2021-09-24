@@ -55,3 +55,11 @@ export const getCommentDate = (date) => {
   dayjs.extend(relativeTime);
   return dayjs(date).fromNow();
 };
+
+export const generateFilmDuration = (duration) => {
+  const hours = Math.trunc(duration / 60);
+  const minutes = duration % 60;
+
+  return `${hours > 0 ? `${hours}h` : ``} ${minutes > 0 ? `${minutes}m` : ``}`;
+};
+

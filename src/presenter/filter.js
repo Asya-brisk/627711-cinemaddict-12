@@ -43,6 +43,11 @@ export default class Filter {
       return;
     }
 
+    if (filterType === FilterType.STATS) {
+      this._filterModel.setFilter(UpdateType.STATS, filterType);
+      return;
+    }
+
     this._filterModel.setFilter(UpdateType.MAJOR, filterType);
   }
 

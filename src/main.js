@@ -1,10 +1,9 @@
 import UserProfileView from "./view/user-profile.js";
 import FooterStatisticsView from "./view/footer-statistics.js";
 import FilmsListsPresenter from "./presenter/films-lists.js";
-import FilterPresenter from './presenter/filter.js';
+import FilterPresenter from "./presenter/filter.js";
 import FilmsModel from "./model/films.js";
-import FilterModel from './model/filter.js';
-import {generateRating} from "./mock/user-profile.js";
+import FilterModel from "./model/filter.js";
 import {generateFilmCard} from "./mock/film-card.js";
 import {generateElements} from "./utils/common.js";
 import {render, RenderPosition} from "./utils/render.js";
@@ -17,14 +16,13 @@ const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 
 const filmCards = generateElements(CARD_COUNT, generateFilmCard);
 
-const rating = generateRating();
-
+const profileView = new UserProfileView();
+const filterModel = new FilterModel();
 const filmsModel = new FilmsModel();
 filmsModel.setFilms(filmCards);
+profileView.setData(filmsModel.getFilms());
 
-const filterModel = new FilterModel();
-
-render(siteHeaderElement, new UserProfileView(rating), RenderPosition.BEFOREEND);
+render(siteHeaderElement, profileView, RenderPosition.BEFOREEND);
 
 const filmsListsPresenter = new FilmsListsPresenter(siteMainElement, filmsModel, filterModel);
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, filmsModel);

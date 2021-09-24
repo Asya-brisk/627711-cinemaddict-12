@@ -1,5 +1,5 @@
 import SmartView from "./smart.js";
-import {getPlurals, getCommentDate} from "../utils/common.js";
+import {getPlurals, getCommentDate, generateFilmDuration} from "../utils/common.js";
 import dayjs from "dayjs";
 import {nanoid} from "nanoid";
 import he from "he";
@@ -101,7 +101,7 @@ const createFilmDetailsPopupTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${duration}</td>
+                  <td class="film-details__cell">${generateFilmDuration(duration)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>

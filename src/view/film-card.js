@@ -1,5 +1,5 @@
 import AbstractView from "./abstract.js";
-import {getPlurals} from "../utils/common.js";
+import {getPlurals, generateFilmDuration} from "../utils/common.js";
 
 const trimDescription = (description) => {
   return description.length > 139 ? description.substr(0, 139) + `...` : description;
@@ -30,7 +30,7 @@ export const createFilmCardTemplate = (film) => {
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${releaseYear}</span>
-        <span class="film-card__duration">${duration}</span>
+        <span class="film-card__duration">${generateFilmDuration(duration)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
