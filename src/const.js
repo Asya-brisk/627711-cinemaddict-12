@@ -77,10 +77,60 @@ export const AGE_RATINGS = [
 
 export const EMOJIS = [`smile`, `sleeping`, `puke`, `angry`];
 
-export const PROFILE_RATINGS = [`Novice`, `Fan`, `Movie Buff`];
+export const ProfileRank = {
+  NOVICE: `Novice`,
+  FAN: `Fan`,
+  MOVIE_BUFF: `Movie Buff`,
+  UNRANKED: ``,
+};
+
+export const FilmDetailsMode = {
+  OPEN: `open`,
+  CLOSE: `close`,
+};
+
+export const FilmDetailsControlType = {
+  FAVORITE: `favorite`,
+  WATCHLIST: `watchlist`,
+  WATCHED: `watched`,
+};
+
+export const FilmCardControlsType = {
+  IN_WATCHLIST: `isInWatchList`,
+  IS_WATCHED: `isWatched`,
+  IS_FAVORITE: `isFavorite`,
+};
 
 export const SortType = {
   DEFAULT: `default`,
   BY_DATE: `by-date`,
   BY_RATING: `by-rating`
+};
+
+export const UserAction = {
+  UPDATE_FILM: `UPDATE_FILM`,
+  DELETE_COMMENT: `DELETE_COMMENT`,
+};
+
+export const UpdateType = {
+  PATCH: `PATCH`,
+  MINOR: `MINOR`,
+  MAJOR: `MAJOR`,
+  STATS: `STATS`,
+};
+
+export const FilterType = {
+  ALL: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITE: `favorite`,
+  STATS: `stats`,
+};
+
+export const StatisticPeriod = {
+  ALL_TIME: `all-time`,
+  TODAY: `day`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`,
 };

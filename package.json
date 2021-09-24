@@ -1,5 +1,5 @@
 {
-  "name": "Cinemaddict",
+  "name": "cinemaddict",
   "version": "1.0.0",
   "private": true,
   "description": "Личный проект «Киноман» от HTML Academy",
@@ -21,6 +21,9 @@
     "node": "10"
   },
   "dependencies": {
-    "dayjs": "1.10.5"
+    "chart.js": "2.9.4",
+    "chartjs-plugin-datalabels": "0.7.0",
+    "dayjs": "1.10.5",
+    "he": "1.2.0"
   }
 }

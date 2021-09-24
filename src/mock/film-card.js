@@ -4,18 +4,15 @@ import {generateComment} from "./comment.js";
 import dayjs from "dayjs";
 import {nanoid} from "nanoid";
 
+const DaysGap = {
+  MIN: 0,
+  MAX: 364,
+};
+
 const generateReleaseDate = () => {
   const releaseRandomDate = getRandomDate(new Date(1940, 1, 1), new Date(1999, 1, 1));
 
   return dayjs(releaseRandomDate).format(`DD MMMM YYYY`);
-};
-
-const generateFilmDuration = () => {
-  const duration = getRandomInteger(60, 250);
-  const hours = Math.trunc(duration / 60);
-  const minutes = duration % 60;
-
-  return `${hours > 0 ? `${hours}h` : ``} ${minutes > 0 ? `${minutes}m` : ``}`;
 };
 
 const generateDescription = () => {
@@ -33,6 +30,11 @@ const generateDescription = () => {
   return description;
 };
 
+const generateWatchingDate = () => {
+  const daysGap = getRandomInteger(DaysGap.MIN, DaysGap.MAX);
+  return dayjs().subtract(daysGap, `day`);
+};
+
 export const generateFilmCard = () => {
   const commentsNum = getRandomInteger(0, 10);
   const filmsReleaseDate = generateReleaseDate();
@@ -44,7 +46,7 @@ export const generateFilmCard = () => {
     rating: getRandomDecimalNumber(0, 10),
     releaseDate: filmsReleaseDate,
     releaseYear: filmsReleaseDate.substr(-4),
-    duration: generateFilmDuration(),
+    duration: getRandomInteger(60, 250),
     genres: shuffleArray(GENRES).slice(0, getRandomInteger(1, 4)),
     description: generateDescription(),
     comments: generateElements(commentsNum, generateComment),
@@ -53,9 +55,9 @@ export const generateFilmCard = () => {
     writers: shuffleArray(NAMES).slice(0, getRandomInteger(2, 4)).join(`, `),
     actors: shuffleArray(NAMES).slice(0, getRandomInteger(2, 4)).join(`, `),
     country: getRandomArrayItem(COUNTRIES),
-    isInWatchlist: getRandomBoolean(),
+    isInWatchList: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isFavorite: getRandomBoolean(),
-    commentsNum,
+    watchingDate: generateWatchingDate(),
   };
 };

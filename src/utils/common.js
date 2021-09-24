@@ -56,16 +56,10 @@ export const getCommentDate = (date) => {
   return dayjs(date).fromNow();
 };
 
-export const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
+export const generateFilmDuration = (duration) => {
+  const hours = Math.trunc(duration / 60);
+  const minutes = duration % 60;
 
-  if (index === -1) {
-    return items;
-  }
-
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
+  return `${hours > 0 ? `${hours}h` : ``} ${minutes > 0 ? `${minutes}m` : ``}`;
 };
+

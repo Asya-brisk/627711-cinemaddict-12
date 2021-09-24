@@ -1,5 +1,5 @@
 import AbstractView from "./abstract.js";
-import {getPlurals} from "../utils/common.js";
+import {getPlurals, generateFilmDuration} from "../utils/common.js";
 
 const trimDescription = (description) => {
   return description.length > 139 ? description.substr(0, 139) + `...` : description;
@@ -30,7 +30,7 @@ export const createFilmCardTemplate = (film) => {
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${releaseYear}</span>
-        <span class="film-card__duration">${duration}</span>
+        <span class="film-card__duration">${generateFilmDuration(duration)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
@@ -51,8 +51,8 @@ export default class FilmCard extends AbstractView {
     this._film = film;
 
     this._cardElementsClickHandler = this._cardElementsClickHandler.bind(this);
-    this._addToWatchlistClickHandler = this._addToWatchlistClickHandler.bind(this);
-    this._addTowatchedClickHandler = this._addTowatchedClickHandler.bind(this);
+    this._addToWatchListClickHandler = this._addToWatchListClickHandler.bind(this);
+    this._addToWatchedClickHandler = this._addToWatchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
 
@@ -65,12 +65,12 @@ export default class FilmCard extends AbstractView {
     this._callback.cardElementsClick();
   }
 
-  _addToWatchlistClickHandler(evt) {
+  _addToWatchListClickHandler(evt) {
     evt.preventDefault();
-    this._callback.addToWatchlistClick();
+    this._callback.addToWatcListClick();
   }
 
-  _addTowatchedClickHandler(evt) {
+  _addToWatchedClickHandler(evt) {
     evt.preventDefault();
     this._callback.addToWatchedClick();
   }
@@ -88,14 +88,14 @@ export default class FilmCard extends AbstractView {
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._cardElementsClickHandler);
   }
 
-  setAddToWatchlistClickHandler(callback) {
-    this._callback.addToWatchlistClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._addToWatchlistClickHandler);
+  setAddToWatchListClickHandler(callback) {
+    this._callback.addToWatcListClick = callback;
+    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._addToWatchListClickHandler);
   }
 
   setAddToWatchedClickHandler(callback) {
     this._callback.addToWatchedClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._addTowatchedClickHandler);
+    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._addToWatchedClickHandler);
   }
 
   setFavoriteClickHandler(callback) {
